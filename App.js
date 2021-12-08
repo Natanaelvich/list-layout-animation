@@ -1,112 +1,104 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useState} from 'react';
+import {Button, View, Text, ScrollView, TextInput} from 'react-native';
+import Animated, {
+  Layout,
+  LightSpeedInLeft,
+  LightSpeedOutRight,
+} from 'react-native-reanimated';
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const styles = {
+  participantView: {
+    borderBottomColor: 'black',
+    width: '100%',
+    borderBottomWidth: 1,
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fffbeb',
+  },
+  listView: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: '100%',
+    paddingBottom: 30,
+  },
+  bottomRow: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+  },
+  textInput: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 };
 
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+function Participant({name, onRemove}) {
+  return (
+    <Animated.View
+      entering={LightSpeedInLeft}
+      layout={Layout.springify()}
+      exiting={LightSpeedOutRight}
+      style={[styles.participantView]}>
+      <Text>{name}</Text>
+      <Button title="Remove" color="red" onPress={onRemove} />
+    </Animated.View>
+  );
+}
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+export default function AnimatedListExample() {
+  const [inputValue, setInputValue] = useState('');
+  const [participantList, setParticipantList] = useState([]);
+
+  const addParticipant = () => {
+    setParticipantList(
+      [{name: inputValue, id: Date.now().toString()}].concat(participantList),
+    );
+    setInputValue('');
+  };
+
+  const removeParticipant = id => {
+    setParticipantList(
+      participantList.filter(participant => participant.id !== id),
+    );
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
+    <View style={[styles.listView]}>
+      <ScrollView style={[{width: '100%'}]}>
+        {participantList.map(participant => (
+          <Participant
+            key={participant.id}
+            name={participant.name}
+            onRemove={() => removeParticipant(participant.id)}
+          />
+        ))}
       </ScrollView>
-    </SafeAreaView>
+
+      <View style={[styles.bottomRow]}>
+        <View style={[styles.textInput]}>
+          <Text>Add participant: </Text>
+          <TextInput
+            placeholder="Name"
+            value={inputValue}
+            onChangeText={setInputValue}
+          />
+        </View>
+
+        <Button
+          title="Add"
+          disabled={inputValue === ''}
+          onPress={addParticipant}
+        />
+      </View>
+    </View>
   );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+}
