@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import 'expo-dev-client';
 import {Button, View, Text, ScrollView, TextInput} from 'react-native';
 import Animated, {
   Layout,
