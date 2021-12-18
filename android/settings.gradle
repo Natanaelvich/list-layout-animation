@@ -1,3 +1,14 @@
 rootProject.name = 'ListLayoutAnimation'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+
+//EXPO CONFIG
+include ':expo-json-utils'
+project(':expo-json-utils').projectDir = new File('../node_modules/expo-json-utils/android')
+ 
+include ':expo-manifests'
+project(':expo-manifests').projectDir = new File('../node_modules/expo-manifests/android')
+ 
+include ':expo-updates-interface'
+project(':expo-updates-interface').projectDir = new File('../node_modules/expo-updates-interface/android')
+
 include ':app'
