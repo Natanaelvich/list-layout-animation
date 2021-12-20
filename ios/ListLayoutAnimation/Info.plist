@@ -59,6 +59,12 @@
 					<string>listlayoutanimation</string>
 				</array>
 			</dict>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.listlayoutanimation</string>
+				</array>
+			</dict>
 		</array>
 	</dict>
 </plist>

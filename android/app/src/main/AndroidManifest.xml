@@ -12,6 +12,7 @@
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="listlayoutanimation" android:host="listlayoutanimation"/>
         <data android:scheme="listlayoutanimation"/>
+        <data android:scheme="com.listlayoutanimation"/>
       </intent-filter>
     </activity>
   </application>
