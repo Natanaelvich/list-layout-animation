@@ -4,13 +4,16 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:clean": "cd android && ./gradlew clean",
+    "android:release": "cd android/ && ./gradlew assembleRelease && echo android/app/build/outputs/apk/release/app-release.apk",
+    "android:abb": "cd android/ && ./gradlew bundleRelease && echo android/app/build/outputs/bundle/release/app-release.aab",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
-    "expo-dev-client": "^0.7.2",
+    "expo-dev-client": "^0.8.4",
     "react": "17.0.2",
     "react-native": "0.66.3",
     "react-native-reanimated": "^2.3.0"
@@ -21,7 +24,7 @@
     "@react-native-community/eslint-config": "^2.0.0",
     "babel-jest": "^26.6.3",
     "eslint": "7.14.0",
-    "expo": "^44.0.0",
+    "expo": ">=44.0.0-0 <45.0.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.66.2",
     "react-test-renderer": "17.0.2"

@@ -1,4 +1,5 @@
 package com.listlayoutanimation;
+import expo.modules.ReactActivityDelegateWrapper;
 
 import android.content.Intent;
 
@@ -29,11 +30,11 @@ public class MainActivity extends DevMenuAwareReactActivity {
 
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
-    return DevLauncherController.wrapReactActivityDelegate(this, () -> new ReactActivityDelegate(this, getMainComponentName()) {
+    return DevLauncherController.wrapReactActivityDelegate(this, () -> new ReactActivityDelegateWrapper(this, new ReactActivityDelegate(this, getMainComponentName()) {
       @Override
       protected ReactRootView createRootView() {
         return new ReactRootView(MainActivity.this);
       }
-    });
+    }));
   }
 }
